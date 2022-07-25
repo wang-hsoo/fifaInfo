@@ -1,232 +1,90 @@
+import { motion } from "framer-motion";
+import { useState } from "react";
 import styled from "styled-components";
-import {motion, useAnimation, useViewportScroll} from "framer-motion";
-import { Link, useHistory, useRouteMatch } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { theme } from "../../theme";
 
-const Nav = styled(motion.nav)`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  font-size: 14px;
-  padding: 20px 60px;
-  color: white;
-  z-index: 99;
-`;
+const Wrapper = styled.div`
+    width: 100%;
+    height: 80px;
+    background-color: ${(props) => props.theme.header};
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 
-const Col = styled.div`
-  display: flex;
-  align-items: center;
-`;
+`
 
-const Logo = styled(motion.svg)`
-  margin-right: 50px;
-  width: 95px;
-  height: 25px;
-  fill: ${(props) => props.theme.red};
-  /* path {
-    stroke-width: 6px;
-    stroke: white;
-  } */
-  path{
-      stroke:white;
-      stroke-width:2;
-    }
-`;
-
-const Items = styled.ul`
-  display: flex;
-  align-items: center;
-`;
-
-const Item = styled.li`
-  margin-right: 20px;
-  color: ${(props) => props.theme.white.darker};
-  transition: color 0.3s ease-in-out;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  &:hover {
-    color: ${(props) => props.theme.white.lighter};
-  }
-`;
-
-const Search = styled.form`
-  color: white;
-  display: flex;
-  align-items: center;
-  position: relative;
-  svg {
-    height: 25px;
-  }
-`;
-
-const Circle = styled(motion.span)`
+const Logo = styled.img`
+    background-image: url(https://ssl.nexon.com/s2/game/fo4/obt/sprite_210600.png);
+    background-position: 0px -402px;
+    width: 218px;
+    height: 35px;
     position: absolute;
-    width: 5px;
-    height: 5px;
-    background-color: ${(props) => props.theme.red};
-    border-radius: 5px;
-    bottom: -10px;
-    left: 0;
-    right: 0;
-    margin: 0 auto; 
-`;
+    text-indent: -9999px;
+    top: 24px;
+    left: 40px;
+    z-index: 2;
+    padding: 20px;
+`
 
-const Input = styled(motion.input)`
-  transform-origin: right center;
-  position: absolute;
-  right: 0px;
-  padding: 5px 10px;
-  padding-left: 40px;
-  z-index: -1;
-  color: white;
-  font-size: 16px;
-  background-color: transparent;
-  border: 1px solid ${(props) => props.theme.white.lighter};
-`;
+const SVG  = styled(motion.svg)`
+    width: 45px;
+    cursor: pointer;
+    margin-right: 20px;
+    fill: ${(props) => props.theme.black};
+    path,g{
+        stroke-width: 1px;
+        stroke: ${(props) => props.theme.black};
+    }
+`
 
 
-const logoVariants = {
+
+const themeModVariant = {
+    normal: {
+        fillOpacity: 1,
+
+    },
     active: {
-        pathLength:[0, 1],
-        fillOpacity:[0,1],
+        fillOpacity:[1, 0, 1],
         transition: {
             //무한반복
             repeat: Infinity,
-            duration: 4
+            duration: 2
         }
     },
-    start: {
-      pathLength: 0,
-      fill: "rgba(255, 255, 255, 0)"
-    },
-    end: {
-      fill:  "${(props) => props.theme.red}",
-      pathLength: 1,
+}
+
+
+function Header(){
+    const [themeMod, setThemeMod] = useState(false);
+
+    const changeMod = () => {
+       setThemeMod((prev) => !prev);
     }
 
-}
+    return(
+        <Wrapper>
+            <Logo />
+            {themeMod ?  
+                <SVG xmlns="http://www.w3.org/2000/svg"  version="1.1" viewBox="0 0 32 32" onClick={changeMod}  variants={themeModVariant} initial="normal" whileHover="active" >
+                 <motion.g><motion.circle cx="16" cy="16" r="9"/>
+                    <motion.path d="M17.5,4.13867V2c0-0.82813-0.67139-1.5-1.5-1.5S14.5,1.17188,14.5,2v2.13867c0,0.82813,0.67139,1.5,1.5,1.5   S17.5,4.9668,17.5,4.13867z"/>
+                    <motion.path d="M8.67383,8.67285c0.58545-0.58594,0.58545-1.53613-0.00049-2.12109L7.16113,5.04004   c-0.58594-0.58594-1.53564-0.58594-2.12158,0C4.4541,5.62598,4.4541,6.57617,5.04004,7.16113l1.51221,1.51172   C6.84521,8.96582,7.229,9.1123,7.61279,9.1123S8.38086,8.96582,8.67383,8.67285z"/>
+                    <motion.path d="M2,17.5h2.13818c0.82861,0,1.5-0.67188,1.5-1.5s-0.67139-1.5-1.5-1.5H2c-0.82861,0-1.5,0.67188-1.5,1.5   S1.17139,17.5,2,17.5z"/>
+                    <motion.path d="M5.03955,26.95996c0.29297,0.29297,0.67725,0.43945,1.06104,0.43945s0.76758-0.14648,1.06055-0.43945l1.51221-1.51172   c0.58594-0.58496,0.58594-1.53516,0.00049-2.12109c-0.58594-0.58594-1.53564-0.58594-2.12158,0l-1.51221,1.51172   C4.4541,25.42383,4.4541,26.37402,5.03955,26.95996z"/>
+                    <motion.path d="M14.5,27.86133V30c0,0.82813,0.67139,1.5,1.5,1.5s1.5-0.67188,1.5-1.5v-2.13867c0-0.82813-0.67139-1.5-1.5-1.5   S14.5,27.0332,14.5,27.86133z"/>
+                    <motion.path d="M24.83887,26.95996c0.29297,0.29297,0.67676,0.43945,1.06055,0.43945s0.76758-0.14648,1.06055-0.43945   c0.58594-0.58594,0.58594-1.53516,0-2.12109l-1.51172-1.51172c-0.58594-0.58594-1.53516-0.58594-2.12109,0   s-0.58594,1.53516,0,2.12109L24.83887,26.95996z"/>
+                    <motion.path d="M30,14.5h-2.13867c-0.82813,0-1.5,0.67188-1.5,1.5s0.67188,1.5,1.5,1.5H30c0.82813,0,1.5-0.67188,1.5-1.5   S30.82813,14.5,30,14.5z"/>
+                    <motion.path d="M26.95996,5.04004c-0.58594-0.58594-1.53516-0.58594-2.12109,0l-1.51172,1.51172   c-0.58594,0.58594-0.58594,1.53516,0,2.12109c0.29297,0.29297,0.67676,0.43945,1.06055,0.43945s0.76758-0.14648,1.06055-0.43945   l1.51172-1.51172C27.5459,6.5752,27.5459,5.62598,26.95996,5.04004z"/></motion.g>
+                </SVG> :
+                <SVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"  onClick={changeMod} variants={themeModVariant} initial="normal" whileHover="active" >
+                    <motion.path  d="M216.5,144.6l-2.2.4A84,84,0,0,1,111,41.6a5.7,5.7,0,0,0,.3-1.8,8,8,0,0,0-5-7.9,7.8,7.8,0,0,0-5.2-.2A100,100,0,1,0,224.3,154.9a7.9,7.9,0,0,0,0-4.8A8.2,8.2,0,0,0,216.5,144.6Z"/>
+                </SVG>}
+            
 
-const navVariants = {
-  top:{
-    backgroundColor:"rgba(0, 0, 0, 0.3)"
-  },
-  scroll:{
-    backgroundColor:"rgba(0, 0, 0, 1)"
-  }
-}
-
-interface IForm {
-  keyword: string;
-}
-
-function Header() {
-    const homeMatch = useRouteMatch("/");
-    const tvMatch = useRouteMatch("/tv"); //현재 위치를 확인
-    const [searchOpen, setSearchOpen] = useState(false);
-    const inputAnimation = useAnimation();
-    const navAnimation = useAnimation();
-    const { scrollY } = useViewportScroll();
-
-    const toggleSearch = () => {
-      if (searchOpen) {
-        inputAnimation.start({
-          scaleX: 0,
-        });
-      } else {
-        inputAnimation.start({ scaleX: 1 });
-      }
-      setSearchOpen( (prev) => !prev)
-    };
-
-    useEffect(() => {
-      scrollY.onChange(() => {
-        if(scrollY.get() > 80){
-            // navAnimation.start({
-            //   backgroundColor:"rgba(0, 0, 0, 1)"
-            // });
-            navAnimation.start("scroll");
-        }else{
-          navAnimation.start("top");
-        }
-      })
-    },[])
-
-    const history = useHistory();
-    const {register, handleSubmit} = useForm<IForm>();
-    const onValid = (data:IForm) => {
-      history.push(`/search?keyword=${data.keyword}`);
-      window.location.reload();
-    }
-
-    return (
-        <Nav 
-          variants={navVariants}
-          initial="top" 
-          animate={navAnimation}
-        >
-        <Col>
-            <Logo
-                xmlns="http://www.w3.org/2000/svg"
-                width="1024"
-                height="276.742"
-                viewBox="0 0 1024 276.742"
-            >
-              <motion.path 
-                variants={logoVariants}
-                initial="start"
-                animate="end"
-                transition={{
-                  default: {duration: 5},
-                  fill: {duration:2, delay: 2},
-                }}
-                whileHover="active"
-                d="M140.803 258.904c-15.404 2.705-31.079 3.516-47.294 5.676l-49.458-144.856v151.073c-15.404 1.621-29.457 3.783-44.051 5.945v-276.742h41.08l56.212 157.021v-157.021h43.511v258.904zm85.131-157.558c16.757 0 42.431-.811 57.835-.811v43.24c-19.189 0-41.619 0-57.835.811v64.322c25.405-1.621 50.809-3.785 76.482-4.596v41.617l-119.724 9.461v-255.39h119.724v43.241h-76.482v58.105zm237.284-58.104h-44.862v198.908c-14.594 0-29.188 0-43.239.539v-199.447h-44.862v-43.242h132.965l-.002 43.242zm70.266 55.132h59.187v43.24h-59.187v98.104h-42.433v-239.718h120.808v43.241h-78.375v55.133zm148.641 103.507c24.594.539 49.456 2.434 73.51 3.783v42.701c-38.646-2.434-77.293-4.863-116.75-5.676v-242.689h43.24v201.881zm109.994 49.457c13.783.812 28.377 1.623 42.43 3.242v-254.58h-42.43v251.338zm231.881-251.338l-54.863 131.615 54.863 145.127c-16.217-2.162-32.432-5.135-48.648-7.838l-31.078-79.994-31.617 73.51c-15.678-2.705-30.812-3.516-46.484-5.678l55.672-126.75-50.269-129.992h46.482l28.377 72.699 30.27-72.699h47.295z" />
-            </Logo>
-            <Items>
-            <Item>
-                <Link to="/">
-                    Home {homeMatch?.isExact && <Circle layoutId="circle" />}
-                </Link>
-            </Item>
-            <Item>
-                <Link to="/tv">
-                    Tv Shows {tvMatch && <Circle layoutId="circle"/>}
-                </Link>
-            </Item>
-            </Items>
-        </Col>
-        <Col>
-            <Search onSubmit={handleSubmit(onValid)}>
-              <motion.svg
-                  onClick={toggleSearch}
-                  animate={{x: searchOpen ? -210 : 0}}
-                  transition={{type:"linear"}}
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                  fillRule="evenodd"
-                  d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                  clipRule="evenodd"
-                  ></path>
-              </motion.svg>
-              <Input
-                {...register("keyword", {required:true, minLength:2})}
-                animate={inputAnimation} 
-                initial={{ scaleX: 0 }} 
-                transition={{type:"linear"}} 
-                placeholder="Search for movie or tv show" />
-            </Search>
-        </Col>
-        </Nav>
-    );
+            
+        </Wrapper>
+    )
 }
 
 export default Header;

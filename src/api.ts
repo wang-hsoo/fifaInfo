@@ -1,59 +1,34 @@
-const API_KEY = "d715ceec7c486156939aed65c955d710";
-const BASE_PATH = "https://api.themoviedb.org/3";
+const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJYLUFwcC1SYXRlLUxpbWl0IjoiNTAwOjEwIiwiYWNjb3VudF9pZCI6IjEwOTExMzM5MTIiLCJhdXRoX2lkIjoiMiIsImV4cCI6MTY3NDIxODIwNiwiaWF0IjoxNjU4NjY2MjA2LCJuYmYiOjE2NTg2NjYyMDYsInNlcnZpY2VfaWQiOiI0MzAwMTE0ODEiLCJ0b2tlbl90eXBlIjoiQWNjZXNzVG9rZW4ifQ.oXNyt6Rnm_SWZISdygedwRNkerFoU55xbAxDj-oB3AY';
 
-interface IMovie {
-    id: number;
-    backdrop_path: string;
-    poster_path: string;
-    title: string;
-    name: string;
-    overview: string;
-    vote_average:number;
-    vote_count:number;
-    }
-
-export interface IGetMoviesResult{
-    dates: {
-        maximum: string;
-        minimum: string;
-        };
-        page: number;
-        results: IMovie[];
-        total_pages: number;
-        total_results: number;
+export interface IsearchUser{
+  "accessId": string,
+  "nickname": string,
+  "level": number
 }
 
-export async function getMovies() {
-    return await fetch(`${BASE_PATH}/movie/now_playing?api_key=${API_KEY}`).then(
-      (response) => response.json()
-    );
-  }
+export async function searchUser(userName:string){
+  return fetch(`https://api.nexon.co.kr/fifaonline4/v1.0/users?nickname=${userName}`, {headers:{Authorization:  API_KEY}}).then((response => response.json()))
+}
+
+export interface IuserDivision{
+    "matchType": number,
+    "division": number,
+    "achievementDate": string
+}
+
+export async function userMaxdivision(accessid:string){
+  return fetch(`https://api.nexon.co.kr/fifaonline4/v1.0/users/${accessid}/maxdivision`, {headers:{Authorization:  API_KEY}}).then((response => response.json()))
+}
+
+export interface ImatchType{
+  "matchtype": number,
+  "desc": string
+}
+
+export async function matchType(){
+  return fetch(`https://static.api.nexon.co.kr/fifaonline4/latest/matchtype.json`, {headers:{Authorization:  API_KEY}}).then((response => response.json()))
+}
 
 
 
-  export interface IGetTvResult{
-    page: number;
-    results: IMovie[];
-    total_pages: number;
-    total_results: number;
-  }
-
-  export async function getTv (){
-    return await fetch(`${BASE_PATH}/tv/popular?api_key=${API_KEY}&language=en-US&page=1`).then(
-      (response) => response.json()
-    );
-  }
-
-  export interface ISearchMovie{
-    page: number;
-    results: IMovie[];
-    total_pages: number;
-    total_results: number;
-  } 
- 
-
-  export async function searchMovie(keyword:string){
-    return await fetch(`${BASE_PATH}/search/movie?api_key=${API_KEY}&language=en-US&query=${keyword}&page=1&include_adult=false`).then(
-      (response) => response.json()
-    );
-  }
+  

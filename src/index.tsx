@@ -62,9 +62,9 @@ table {
 body {
   font-weight: 300;
   font-family: 'Source Sans Pro', sans-serif;
-  color:${(props) => props.theme.white.darker};
+  color:${(props) => props.theme.textColor};
   line-height: 1.2;
-  background-color: black;
+  background-color: ${(props) => props.theme.bgColor};
   overflow-x:hidden;
 }
 a {
@@ -74,6 +74,8 @@ a {
 `;
 
 const client = new QueryClient();
+
+
 
 ReactDOM.render(
   <React.StrictMode>
