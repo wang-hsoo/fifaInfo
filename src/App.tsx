@@ -8,7 +8,7 @@ function App() {
     <Router>
       <Header />
       <Switch>
-        <Route path={["/", "/userSearch", "/userSearch/:nickName"]}> 
+        <Route path={["/", "/userSearch", "/userSearch/:nickName","/userSearch/:nickName/trans","/userSearch/:nickName/math" ]}> 
           <Home />
         </Route>
       </Switch>

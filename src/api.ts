@@ -16,17 +16,14 @@ export interface IuserDivision{
     achievementDate: string
 }
 
-export interface ImaxDivision{
-  Promise:  IuserDivision[];
-  
-}
+
 
 
 
 export async function userMaxdivision(accessid:string){
-  const a = fetch(`https://api.nexon.co.kr/fifaonline4/v1.0/users/${accessid}/maxdivision`, {headers:{Authorization:  API_KEY}}).then((response => response.json()))
+  return fetch(`https://api.nexon.co.kr/fifaonline4/v1.0/users/${accessid}/maxdivision`, {headers:{Authorization:  API_KEY}}).then((response => response.json()))
   
-  return a;
+  
 }
 
 export interface ImatchType{
@@ -37,6 +34,53 @@ export interface ImatchType{
 export async function matchType(){
   return fetch(`https://static.api.nexon.co.kr/fifaonline4/latest/matchtype.json`, {headers:{Authorization:  API_KEY}}).then((response => response.json()))
 }
+
+export interface IdivisionType{
+  divisionId: number,
+  divisionName: string
+}
+
+export async function divisionType(){
+  return fetch(`https://static.api.nexon.co.kr/fifaonline4/latest/division.json`, {headers:{Authorization:  API_KEY}}).then((response => response.json()))
+}
+
+
+export interface IplayerBuy{
+  tradeDate: string,
+  saleSn: string,
+  spid: number,
+  grade: number,
+  value: number,
+}
+
+export  async function palyerBuy(accessid:string){
+  return fetch(`https://api.nexon.co.kr/fifaonline4/v1.0/users/${accessid}/markets?tradetype=buy&offset=0&limit=50`, {headers:{Authorization:  API_KEY}}).then((response => response.json()))
+}
+
+export async function playerSell(accessid:string){
+  return fetch(`https://api.nexon.co.kr/fifaonline4/v1.0/users/${accessid}/markets?tradetype=sell&offset=0&limit=50`, {headers:{Authorization:  API_KEY}}).then((response => response.json()))
+}
+
+export interface IpalyerInfo{
+  id: number,
+  name: string
+}
+
+export async function palyerInfo(){
+  return fetch(`https://static.api.nexon.co.kr/fifaonline4/latest/spid.json`, {headers:{Authorization:  API_KEY}}).then((response => response.json()))
+}
+
+export interface IseasonId{
+  seasonId: number,
+  className: string,
+  seasonImg: string
+}
+
+export async function seasonId(){
+  return fetch(`https://static.api.nexon.co.kr/fifaonline4/latest/seasonid.json`, {headers:{Authorization:  API_KEY}}).then((response => response.json()))
+}
+
+
 
 
 

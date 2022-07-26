@@ -6,11 +6,11 @@ import { theme } from "../../theme";
 const Wrapper = styled.div`
     width: 100%;
     height: 80px;
-    background-color: ${(props) => props.theme.header};
+    background-color: ${(props) => props.theme.bgColor};
     display: flex;
     align-items: center;
     justify-content: flex-end;
-
+    top: 0;
 `
 
 const Logo = styled.img`
