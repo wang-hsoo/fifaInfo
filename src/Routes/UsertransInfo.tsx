@@ -78,8 +78,7 @@ function UserTransInfo(accessId:any){
 
     const {data:playerInfo} = useQuery<IpalyerInfo>(["palyerInfo"], palyerInfo);
     const {data:season} = useQuery<IseasonId>(["season"], seasonId);
-    // const {data:img} = useQuery(["img"], playerImg);
-    // console.log(img);
+    
 
     const [tradeData, setTradeData] = useState<any>();
     const [tradeCheck, setTradeCheck] = useState<Boolean>(false);

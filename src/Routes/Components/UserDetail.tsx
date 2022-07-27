@@ -107,7 +107,7 @@ function UserDetail({accessId, nickname, level}:IsearchUser){
     const trans = useRouteMatch(`/userSearch/${nickname}/trans`);
     const math = useRouteMatch(`/userSearch/${nickname}/math`);
 
-    
+
      useEffect(() => {
         if(data){
             const getMaxDivision = {
@@ -187,7 +187,7 @@ function UserDetail({accessId, nickname, level}:IsearchUser){
             </Submenu>
 
             {trans && <UserTransInfo accessId = {accessId} />}
-            {math && <UserMatchInfo />}
+            {math && <UserMatchInfo  accessId = {accessId} />}
         </Wrapper>
     )
 }
