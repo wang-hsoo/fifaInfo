@@ -84,7 +84,7 @@ const MenuCheck = styled(motion.div)`
 const Circle = styled(motion.svg)`
     position: absolute;
     margin-left: 40px;
-
+    fill: #ac9a00;
 `;
 
 const btnVariant = {
@@ -187,7 +187,7 @@ function UserDetail({accessId, nickname, level}:IsearchUser){
             </Submenu>
 
             {trans && <UserTransInfo accessId = {accessId} />}
-            {math && <UserMatchInfo  accessId = {accessId} />}
+            {math && <UserMatchInfo  accessId = {accessId}  nickname = {nickname} />}
         </Wrapper>
     )
 }

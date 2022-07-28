@@ -5,7 +5,7 @@ export const theme: DefaultTheme = {
     black: "black",
     bgColor:"white",
     darkBorwn: "#545140",
-    mainBack: `rgba(255,255,255,0.9)`,
+    mainBack: `rgba(255,255,255,0.5)`,
     userName: "#404040",
     dark: "#252422"
 };

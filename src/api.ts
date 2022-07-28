@@ -2,8 +2,8 @@ const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJYLUFwcC1SYXRlLUxpbWl0Ij
 
 export interface IsearchUser{
   accessId: string,
-  nickname: string,
-  level: number
+  nickname?: string,
+  level?: number
 }
 
 export async function searchUser(userName:string){
@@ -81,8 +81,8 @@ export async function seasonId(){
 }
 
 
-export async function userMatchCode(accessId:string){
-  return fetch(`https://api.nexon.co.kr/fifaonline4/v1.0/users/${accessId}/matches?matchtype=50&offset=0&limit=10`, {headers:{Authorization:  API_KEY}}).then((response => response.json()))
+export async function userMatchCode(accessId:string, changeMatchMode:string){
+  return fetch(`https://api.nexon.co.kr/fifaonline4/v1.0/users/${accessId}/matches?matchtype=${changeMatchMode}&offset=0&limit=10`, {headers:{Authorization:  API_KEY}}).then((response => response.json()))
 }
 
 interface shootDetal{
@@ -223,10 +223,10 @@ export async function matchInfo(matchList:any){
 
     
     const matchInfo = {
-      default: matchDetailInfo
+      info: matchDetailInfo
     }
   
-  return await matchInfo;
+  return matchInfo;
 }
 
 

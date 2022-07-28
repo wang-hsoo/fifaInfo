@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import { IpalyerInfo, IplayerBuy, IseasonId, palyerBuy, palyerInfo, playerSell, seasonId } from "../api";
+import { IpalyerInfo, IplayerBuy, IsearchUser, IseasonId, palyerBuy, palyerInfo, playerSell, seasonId } from "../api";
 
 const Wrapper = styled.div`
     margin-top: 30px;
@@ -44,7 +44,7 @@ const TransList = styled.div`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     margin-top: 10px;
-    background-color: ${(props) => props.theme.mainBack};
+    background-color: rgba(255,255,255,0.9);
     border-radius: 20px;
     place-items: center;
 `
@@ -71,10 +71,10 @@ const Name = styled.h1`
     color: ${(props) => props.theme.black};
 `
 
-function UserTransInfo(accessId:any){
-    const {data:buy} = useQuery<IplayerBuy>(["playerBuy"], () => palyerBuy(accessId.accessId));
+function UserTransInfo({accessId}:IsearchUser){
+    const {data:buy} = useQuery<IplayerBuy>(["playerBuy"], () => palyerBuy(accessId));
     
-    const {data:sell} = useQuery<IplayerBuy>(["playersell"], () => playerSell(accessId.accessId));
+    const {data:sell} = useQuery<IplayerBuy>(["playersell"], () => playerSell(accessId));
 
     const {data:playerInfo} = useQuery<IpalyerInfo>(["palyerInfo"], palyerInfo);
     const {data:season} = useQuery<IseasonId>(["season"], seasonId);
