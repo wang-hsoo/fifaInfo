@@ -79,6 +79,7 @@ function UserTransInfo({accessId}:IsearchUser){
     const {data:playerInfo} = useQuery<IpalyerInfo>(["palyerInfo"], palyerInfo);
     const {data:season} = useQuery<IseasonId>(["season"], seasonId);
     
+   
 
     const [tradeData, setTradeData] = useState<any>();
     const [tradeCheck, setTradeCheck] = useState<Boolean>(false);
@@ -108,18 +109,20 @@ function UserTransInfo({accessId}:IsearchUser){
     }
 
     useEffect(()=>{
-        if(playerInfo && season){
-            const palyer = {
-                default: playerInfo
+        setTimeout(() => {
+            if(playerInfo && season){
+                const palyer = {
+                    default: playerInfo
+                }
+    
+                const seanson = {
+                    default: season
+                }
+    
+                setsSeasonCheck(seanson);
+                setPalyerCheck(palyer);
             }
-
-            const seanson = {
-                default: season
-            }
-
-            setsSeasonCheck(seanson);
-            setPalyerCheck(palyer);
-        }
+        }, 100)
     },[]);
     
 

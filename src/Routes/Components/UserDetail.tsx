@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
-import { divisionType, IdivisionType, ImatchType, IsearchUser, IuserDivision, matchType, userMaxdivision } from "../../api";
+import { divisionType, IdivisionType, ImatchType, IpalyerInfo, IsearchUser, IuserDivision, matchType, palyerInfo, userMaxdivision } from "../../api";
 import UserMatchInfo from "../UserMatchInfo";
 import UserTransInfo from "../UsertransInfo";
 
@@ -106,6 +106,7 @@ function UserDetail({accessId, nickname, level}:IsearchUser){
     const [divisionName, setDivisionName] = useState<any>();
     const trans = useRouteMatch(`/userSearch/${nickname}/trans`);
     const math = useRouteMatch(`/userSearch/${nickname}/math`);
+    const {data:playerInfo} = useQuery<IpalyerInfo>(["palyerInfo"], palyerInfo);
 
 
      useEffect(() => {

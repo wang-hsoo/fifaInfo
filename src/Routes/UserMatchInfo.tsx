@@ -2,7 +2,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import { ImatchInfo, IsearchUser, matchInfo, userMatchCode } from "../api";
+import { ImatchInfo, IpalyerInfo, IsearchUser, matchInfo, palyerInfo, userMatchCode } from "../api";
+import LineUp from "./Components/LineUp";
+import Player from "./Components/Player";
+
+import Record from "./Components/Record";
 
 const Wrapper = styled.div`
     width: 100%;
@@ -73,7 +77,7 @@ const MatchContent = styled(motion.div)`
 const Vs = styled.div`
     font-size: 40px;
     margin-right: 30px;
-    
+    font-weight: 600;
 `
 
 const Opponent = styled.h1`
@@ -82,6 +86,10 @@ const Opponent = styled.h1`
     margin-top: 7px;
     margin-right: 30px;
     width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 `
 
 const Score = styled.div`
@@ -101,12 +109,36 @@ const MatchResult = styled.div<{resultColor:string}>`
 const MatchDetail = styled(motion.div)`
     width: 100%;
     height: 500px;
-    background-color: black;
+    background-color: ${(props) => props.theme.bgColor};
     position: relative;
     border-radius: 15px;
     margin-top: -120px;
     margin-bottom: 20px;
     
+`
+
+const MatchHeader = styled.div`
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    padding-top: 23px;
+`
+
+const DetailBtnList =styled.div`
+    display: flex;
+    width: 100%;
+    align-items: center;
+    height: 40px;
+    margin-top: 20px;
+    justify-content: space-around;
+    font-weight: 500;
+    background-color: ${(props) => props.theme.dark};
+`
+
+const DetailBtn = styled.div`
+    color: ${(props) => props.theme.bgColor};
+    cursor: pointer;
 `
 
 
@@ -118,7 +150,9 @@ function UserMatchInfo({accessId, nickname}:IsearchUser){
     const [matchResult, setMatchResult] = useState<any>();
     const [matchTitle, setMatchTitle] = useState<string>("공식경기");
     const [matchDetail, setMatchDetail]  = useState("");
-
+    const [playerCheck, setPalyerCheck] = useState<any>();
+    const {data:playerInfo} = useQuery<IpalyerInfo>(["palyerInfo"], palyerInfo);
+    const [changeMatchDetail, setChangeMatchDetail] = useState<string>("LineUp");
     
     
 
@@ -128,9 +162,15 @@ function UserMatchInfo({accessId, nickname}:IsearchUser){
             if(data?.info){
                 Promise.all(data?.info).then((value:any) => setMatchResult(value))
             }   
-        }, 2000);
+            if(playerInfo){
+                const palyer = {
+                    default: playerInfo
+                }
+                setPalyerCheck(palyer);
+            }
+        }, 100);
            
-    },[data])
+    },[data,matchDetail])
     
     const changeMatch = (event:any) => {
         const title = event.target.innerText;
@@ -151,7 +191,7 @@ function UserMatchInfo({accessId, nickname}:IsearchUser){
    
    
 
-    console.log(matchResult, isLoading)
+
   
    
 
@@ -190,8 +230,27 @@ function UserMatchInfo({accessId, nickname}:IsearchUser){
                                     </MatchResult>
                                 </MatchContent>
                                 <AnimatePresence initial={false}>
-                                   {matchDetail === result.matchId  && <MatchDetail layoutId={result.matchId} onClick={() => setMatchDetail("")}>
-
+                                   {matchDetail === result.matchId  && 
+                                   <MatchDetail layoutId={result.matchId}>
+                                        <MatchHeader>
+                                            <Opponent>
+                                                <div>{result.matchInfo[0].nickname}</div>
+                                                <div>{result.matchInfo[0].shoot.goalTotal}</div>
+                                            </Opponent>
+                                            <Vs>vs</Vs>
+                                            <Opponent>
+                                                <div>{result.matchInfo[1].nickname}</div>
+                                                <div>{result.matchInfo[1].shoot.goalTotal}</div>
+                                            </Opponent>
+                                        </MatchHeader>
+                                        <DetailBtnList>
+                                            <DetailBtn onClick={() => setChangeMatchDetail("LineUp")}>라인업</DetailBtn>
+                                            <DetailBtn onClick={() => setChangeMatchDetail("player")}>선수 스탯</DetailBtn>
+                                            <DetailBtn onClick={() => setChangeMatchDetail("record")}>경기 기록</DetailBtn>
+                                        </DetailBtnList>
+                                        {changeMatchDetail === "LineUp" && <LineUp />} 
+                                        {changeMatchDetail === "player" && <Player />} 
+                                        {changeMatchDetail === "record" && <Record />} 
                                     </MatchDetail>}
                                 </AnimatePresence>
                             </MatchCover>
