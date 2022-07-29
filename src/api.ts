@@ -230,6 +230,13 @@ export async function matchInfo(matchList:any){
 }
 
 
+export interface IPosition{
+  sppotition: number,
+  desc: string
+}
 
+export async function position(){
+  return fetch(`https://static.api.nexon.co.kr/fifaonline4/latest/spposition.json`, {headers:{Authorization:  API_KEY}}).then((response => response.json()))
+}
 
   

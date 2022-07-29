@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import { ImatchInfo, IpalyerInfo, IsearchUser, matchInfo, palyerInfo, userMatchCode } from "../api";
+import { ImatchInfo, IpalyerInfo, IPosition, IsearchUser, matchInfo, palyerInfo, position, userMatchCode } from "../api";
 import LineUp from "./Components/LineUp";
 import Player from "./Components/Player";
 
@@ -108,7 +108,7 @@ const MatchResult = styled.div<{resultColor:string}>`
 
 const MatchDetail = styled(motion.div)`
     width: 100%;
-    height: 500px;
+    height: 850px;
     background-color: ${(props) => props.theme.bgColor};
     position: relative;
     border-radius: 15px;
@@ -153,6 +153,7 @@ function UserMatchInfo({accessId, nickname}:IsearchUser){
     const [playerCheck, setPalyerCheck] = useState<any>();
     const {data:playerInfo} = useQuery<IpalyerInfo>(["palyerInfo"], palyerInfo);
     const [changeMatchDetail, setChangeMatchDetail] = useState<string>("LineUp");
+    const {data:getPosition} = useQuery<IPosition>(["position"], position);
     
     
 
@@ -248,7 +249,7 @@ function UserMatchInfo({accessId, nickname}:IsearchUser){
                                             <DetailBtn onClick={() => setChangeMatchDetail("player")}>선수 스탯</DetailBtn>
                                             <DetailBtn onClick={() => setChangeMatchDetail("record")}>경기 기록</DetailBtn>
                                         </DetailBtnList>
-                                        {changeMatchDetail === "LineUp" && <LineUp />} 
+                                        {changeMatchDetail === "LineUp" && <LineUp playerCheck={playerCheck} result={result} getPosition={getPosition} />} 
                                         {changeMatchDetail === "player" && <Player />} 
                                         {changeMatchDetail === "record" && <Record />} 
                                     </MatchDetail>}
