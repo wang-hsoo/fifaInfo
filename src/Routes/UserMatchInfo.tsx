@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
 import { ImatchInfo, IpalyerInfo, IPosition, IsearchUser, matchInfo, palyerInfo, position, userMatchCode } from "../api";
+import Chart from "./Components/Chart";
 import LineUp from "./Components/LineUp";
 import Player from "./Components/Player";
 
@@ -207,13 +208,16 @@ function UserMatchInfo({accessId, nickname}:IsearchUser){
                 <Btn onClick={changeMatch}>클래식 1on1</Btn>
             </Menu>
 
+           
+
            { isLoading ? <div>로딩중</div> :
             <MatchList>
+                <Chart matchResult={matchResult} nickname={nickname}/>
                 <MatchTItle>{matchTitle}</MatchTItle>
                     <Matchform>
                         {matchResult?.map((result:any) => (
                             <MatchCover>
-                                <MatchContent key={result.matchId} onClick={() => setMatchDetail(result.matchId)} layoutId={result.matchId}>
+                                <MatchContent key={result.matchId} onClick={() => {setMatchDetail(result.matchId); setChangeMatchDetail("LineUp");}} layoutId={result.matchId}>
                                     <Vs>vs</Vs>
                                     <Opponent>
                                         {result.matchInfo[0].nickname === nickname ? result.matchInfo[1].nickname : result.matchInfo[0].nickname }
@@ -250,8 +254,8 @@ function UserMatchInfo({accessId, nickname}:IsearchUser){
                                             <DetailBtn onClick={() => setChangeMatchDetail("record")}>경기 기록</DetailBtn>
                                         </DetailBtnList>
                                         {changeMatchDetail === "LineUp" && <LineUp playerCheck={playerCheck} result={result} getPosition={getPosition} />} 
-                                        {changeMatchDetail === "player" && <Player />} 
-                                        {changeMatchDetail === "record" && <Record />} 
+                                        {changeMatchDetail === "player" && <Player result={result} playerCheck={playerCheck} getPosition={getPosition}  />} 
+                                        {changeMatchDetail === "record" && <Record result={result}  />} 
                                     </MatchDetail>}
                                 </AnimatePresence>
                             </MatchCover>

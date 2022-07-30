@@ -1,9 +1,13 @@
-function Record(){
+import ApexChart from "react-apexcharts";
 
+function Record({result}:any){
+    
+
+    console.log(result);
 
     return(
         <div>
-            스탯
+           
         </div>
     )
 }

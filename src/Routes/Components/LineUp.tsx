@@ -77,7 +77,7 @@ function LineUp({playerCheck, result, getPosition}:any){
                  }
             }
             home.sort(function(a:any,b:any){
-                return a.num - b.num
+                return a.num - b.num 
             })
             away.sort(function(a:any,b:any){
                 return a.num - b.num

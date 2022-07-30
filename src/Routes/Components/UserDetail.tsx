@@ -110,23 +110,26 @@ function UserDetail({accessId, nickname, level}:IsearchUser){
 
 
      useEffect(() => {
-        if(data){
-            const getMaxDivision = {
-                default: data
+        setTimeout(() => {
+            if(data){
+                const getMaxDivision = {
+                    default: data
+                }
+    
+                const divisionCheck = {
+                    default: mathCode
+                }
+    
+                const divisionMax = {
+                    default: divisionCode
+                }
+    
+                setMaxDivision(getMaxDivision);
+                setDivision(divisionCheck);
+                setDivisionName(divisionMax);
             }
-
-            const divisionCheck = {
-                default: mathCode
-            }
-
-            const divisionMax = {
-                default: divisionCode
-            }
-
-            setMaxDivision(getMaxDivision);
-            setDivision(divisionCheck);
-            setDivisionName(divisionMax);
-        }
+        },100)
+        
      },[data])
 
      const tarnsMove = () => {

@@ -122,7 +122,7 @@ function UserTransInfo({accessId}:IsearchUser){
                 setsSeasonCheck(seanson);
                 setPalyerCheck(palyer);
             }
-        }, 100)
+        }, 1000)
     },[]);
     
 
