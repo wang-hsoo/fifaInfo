@@ -128,7 +128,7 @@ function UserDetail({accessId, nickname, level}:IsearchUser){
                 setDivision(divisionCheck);
                 setDivisionName(divisionMax);
             }
-        },100)
+        },1000)
         
      },[data])
 
