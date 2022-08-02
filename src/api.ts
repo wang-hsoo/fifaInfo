@@ -199,7 +199,7 @@ player: player[],
   
 }
 
-interface ImatchBasic{
+export interface ImatchBasic{
     matchId: string,
     matchDate: string,
     matchInfo: matchInfoDetail[],
@@ -208,7 +208,7 @@ interface ImatchBasic{
 }
 
 export interface ImatchInfo{
-  default: ImatchBasic[]
+  info: ImatchBasic[]
 }
 
 export async function matchInfo(matchList:any){

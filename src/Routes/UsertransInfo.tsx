@@ -72,35 +72,28 @@ const Name = styled.h1`
 `
 
 function UserTransInfo({accessId}:IsearchUser){
-    const {data:buy} = useQuery<IplayerBuy>(["playerBuy"], () => palyerBuy(accessId));
+    const {data:buy} = useQuery<IplayerBuy[]>(["playerBuy"], () => palyerBuy(accessId));
     
-    const {data:sell} = useQuery<IplayerBuy>(["playersell"], () => playerSell(accessId));
+    const {data:sell} = useQuery<IplayerBuy[]>(["playersell"], () => playerSell(accessId));
 
-    const {data:playerInfo} = useQuery<IpalyerInfo>(["palyerInfo"], palyerInfo);
-    const {data:season} = useQuery<IseasonId>(["season"], seasonId);
-    
-   
-
-    const [tradeData, setTradeData] = useState<any>();
+    const {data:playerInfo} = useQuery<IpalyerInfo[]>(["palyerInfo"], palyerInfo);
+    const {data:season} = useQuery<IseasonId[]>(["season"], seasonId);
+    const [tradeData, setTradeData] = useState<IplayerBuy[]>();
     const [tradeCheck, setTradeCheck] = useState<Boolean>(false);
-    const [playerCheck, setPalyerCheck] = useState<any>();
-    const [seasonCheck, setsSeasonCheck] = useState<any>();
+
 
     const setData = (event:any) => {
         const value = event.target.outerText;
+        setTradeCheck(false);
         switch(value){
             case "영입":
-                const tradeBuy = {
-                    default: buy
-                }
+                const tradeBuy = buy
                 setTradeData(tradeBuy);
                 setTradeCheck(true);
                 break;
 
             case "방출":
-                const tradeSell = {
-                    default: sell
-                }
+                const tradeSell = sell
                 setTradeData(tradeSell);
                 setTradeCheck(true);
                 break;
@@ -108,22 +101,7 @@ function UserTransInfo({accessId}:IsearchUser){
 
     }
 
-    useEffect(()=>{
-        setTimeout(() => {
-            if(playerInfo && season){
-                const palyer = {
-                    default: playerInfo
-                }
-    
-                const seanson = {
-                    default: season
-                }
-    
-                setsSeasonCheck(seanson);
-                setPalyerCheck(palyer);
-            }
-        }, 1000)
-    },[]);
+
     
 
     return(
@@ -134,20 +112,20 @@ function UserTransInfo({accessId}:IsearchUser){
                 <Btn onClick={setData}>방출</Btn>
             </Menu>
             <TransForm>
-                {tradeCheck && tradeData?.default.map((data:any) => (
-                    <TransList>
+                {tradeCheck && tradeData?.map((data:IplayerBuy, idx:number) => (
+                    <TransList key={idx}>
                         <div>{String(data.spid).substring(3).charAt( 0 ) === '0' ? 
                             <img src={`https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/players/p${String(data.spid).substring(3).slice(1)}.png`} /> :
                             <img src={`https://fo4.dn.nexoncdn.co.kr/live/externalAssets/common/players/p${String(data.spid).substring(3)}.png`} />   
                         }</div>
                         <PlayerInfo>
-                            <SeasonImg>{seasonCheck?.default.map((info:any)=>(
+                            <SeasonImg>{season?.map((info:IseasonId, idx:number)=>(
                                 info.seasonId+'' === String(data.spid).substring(0,3) ? 
-                                    <img src={info.seasonImg} />
+                                    <img key={idx} src={info.seasonImg} />
                                 : null
                             ))}</SeasonImg>
 
-                            <Name>{playerCheck?.default.map((info:any) => (
+                            <Name>{playerInfo?.map((info:IpalyerInfo) => (
                                 data.spid === info.id ? info.name : null
                             ))}</Name>
                         

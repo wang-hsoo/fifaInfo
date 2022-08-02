@@ -98,39 +98,11 @@ const btnVariant = {
 
 function UserDetail({accessId, nickname, level}:IsearchUser){
     const history = useHistory();
-    const {data, isLoading} = useQuery<IuserDivision>(["maxDivision"], () => userMaxdivision(accessId));
-    const {data:mathCode} = useQuery<ImatchType>(["matchType"], matchType);
-    const {data:divisionCode} = useQuery<IdivisionType>(["divisiontype"], divisionType);
-    const [maxDivision, setMaxDivision] = useState<any>();
-    const [division, setDivision] = useState<any>();
-    const [divisionName, setDivisionName] = useState<any>();
+    const {data, isLoading} = useQuery<IuserDivision[]>(["maxDivision"], () => userMaxdivision(accessId));
+    const {data:mathCode} = useQuery<ImatchType[]>(["matchType"], matchType);
+    const {data:divisionCode} = useQuery<IdivisionType[]>(["divisiontype"], divisionType);
     const trans = useRouteMatch(`/userSearch/${nickname}/trans`);
     const math = useRouteMatch(`/userSearch/${nickname}/math`);
-    const {data:playerInfo} = useQuery<IpalyerInfo>(["palyerInfo"], palyerInfo);
-
-
-     useEffect(() => {
-        setTimeout(() => {
-            if(data){
-                const getMaxDivision = {
-                    default: data
-                }
-    
-                const divisionCheck = {
-                    default: mathCode
-                }
-    
-                const divisionMax = {
-                    default: divisionCode
-                }
-    
-                setMaxDivision(getMaxDivision);
-                setDivision(divisionCheck);
-                setDivisionName(divisionMax);
-            }
-        },1000)
-        
-     },[data])
 
      const tarnsMove = () => {
         history.push(`/userSearch/${nickname}/trans`);
@@ -150,15 +122,15 @@ function UserDetail({accessId, nickname, level}:IsearchUser){
                     <RowList>디비전</RowList>
                     <RowList>달성일자</RowList>
                 </Row>
-                {maxDivision && maxDivision?.default.map((info:any) => (
-                    <MaxContent>
+                {data && data?.map((info:IuserDivision, idx:number) => (
+                    <MaxContent key={idx}>
 
-                        <div>{division && division?.default.map((match:any) => (
-                            <div>{match.matchtype === info.matchType ? match.desc : null}</div>
+                        <div>{mathCode && mathCode.map((match:ImatchType) => (
+                            <div key={match.matchtype}>{match.matchtype === info.matchType ? match.desc : null}</div>
                         ))}</div>
 
-                        <div>{divisionName && divisionName?.default.map((match:any) => (
-                            <div>{match.divisionId === info.division ? match.divisionName : null}</div>
+                        <div>{divisionCode && divisionCode.map((match:IdivisionType) => (
+                            <div key={match.divisionId}>{match.divisionId === info.division ? match.divisionName : null}</div>
                         ))}</div>
 
                         <div>{info.achievementDate}</div>

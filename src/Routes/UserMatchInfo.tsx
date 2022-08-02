@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import { ImatchInfo, IpalyerInfo, IPosition, IsearchUser, matchInfo, palyerInfo, position, userMatchCode } from "../api";
+import { ImatchBasic, ImatchInfo, IpalyerInfo, IPosition, IsearchUser, matchInfo, palyerInfo, position, userMatchCode } from "../api";
 import Chart from "./Components/Chart";
 import LineUp from "./Components/LineUp";
 import Player from "./Components/Player";
@@ -148,15 +148,14 @@ function UserMatchInfo({accessId, nickname}:IsearchUser){
     const [changeMatchMode, setChangeMatchMode] = useState<string>("50");
     const {data:matchid} = useQuery<string>(["matchCode", accessId, changeMatchMode], () => userMatchCode(accessId, changeMatchMode));
     const {data, isLoading} = useQuery<any>(["matchInfo", matchid ], () => matchInfo(matchid));
-    const [matchResult, setMatchResult] = useState<any>();
+    const [matchResult, setMatchResult] = useState<ImatchBasic[]>();
     const [matchTitle, setMatchTitle] = useState<string>("공식경기");
     const [matchDetail, setMatchDetail]  = useState("");
-    const [playerCheck, setPalyerCheck] = useState<any>();
-    const {data:playerInfo} = useQuery<IpalyerInfo>(["palyerInfo"], palyerInfo);
+    const {data:playerInfo} = useQuery<IpalyerInfo[]>(["palyerInfo"], palyerInfo);
     const [changeMatchDetail, setChangeMatchDetail] = useState<string>("LineUp");
     const {data:getPosition} = useQuery<IPosition>(["position"], position);
     
-    
+  
 
     useEffect(() => {
         
@@ -164,12 +163,7 @@ function UserMatchInfo({accessId, nickname}:IsearchUser){
             if(data?.info){
                 Promise.all(data?.info).then((value:any) => setMatchResult(value))
             }   
-            if(playerInfo){
-                const palyer = {
-                    default: playerInfo
-                }
-                setPalyerCheck(palyer);
-            }
+           
         }, 100);
            
     },[data,matchDetail])
@@ -215,7 +209,7 @@ function UserMatchInfo({accessId, nickname}:IsearchUser){
                 <Chart matchResult={matchResult} nickname={nickname}/>
                 <MatchTItle>{matchTitle}</MatchTItle>
                     <Matchform>
-                        {matchResult?.map((result:any) => (
+                        {matchResult?.map((result:ImatchBasic) => (
                             <MatchCover>
                                 <MatchContent key={result.matchId} onClick={() => {setMatchDetail(result.matchId); setChangeMatchDetail("LineUp");}} layoutId={result.matchId}>
                                     <Vs>vs</Vs>
@@ -253,8 +247,8 @@ function UserMatchInfo({accessId, nickname}:IsearchUser){
                                             <DetailBtn onClick={() => setChangeMatchDetail("player")}>선수 스탯</DetailBtn>
                                             <DetailBtn onClick={() => setChangeMatchDetail("record")}>경기 기록</DetailBtn>
                                         </DetailBtnList>
-                                        {changeMatchDetail === "LineUp" && <LineUp playerCheck={playerCheck} result={result} getPosition={getPosition} />} 
-                                        {changeMatchDetail === "player" && <Player result={result} playerCheck={playerCheck} getPosition={getPosition}  />} 
+                                        {changeMatchDetail === "LineUp" && <LineUp playerCheck={playerInfo} result={result} getPosition={getPosition} />} 
+                                        {changeMatchDetail === "player" && <Player result={result} playerCheck={playerInfo} getPosition={getPosition}  />} 
                                         {changeMatchDetail === "record" && <Record result={result}  />} 
                                     </MatchDetail>}
                                 </AnimatePresence>

@@ -115,23 +115,25 @@ interface IplayerStatus{
     
 }
 
+
+
 function Player({playerCheck, result, getPosition}:any){
-    const [homePlayer, setHomePlayer] = useState<any>();     
-    const [awayPlayer, setAwayPlayer] = useState<any>([]);
+    const [homePlayer, setHomePlayer] = useState<IplayerStatus[]>();     
+    const [awayPlayer, setAwayPlayer] = useState<IplayerStatus[]>();
     const [playerRecord, setPlayerRecord] = useState<IplayerStatus[]>();
 
     const getPlayerInfo = () => {
         setTimeout(() => {
             const home = [];
             const away = [];
-            for(let i = 0; i < playerCheck.default.length; i++){
+            for(let i = 0; i < playerCheck.length; i++){
                 for(let a = 0; a < result.matchInfo[0].player.length; a++){
-                    if(playerCheck.default[i].id === result.matchInfo[0].player[a].spId){
+                    if(playerCheck[i].id === result.matchInfo[0].player[a].spId){
                         for(let b = 0; b < getPosition.length; b++){
                             if(result.matchInfo[0].player[a].spPosition === getPosition[b].spposition){
                                 home.push({
                                     num: getPosition[b].spposition,
-                                    name: playerCheck.default[i].name,
+                                    name: playerCheck[i].name,
                                     position: getPosition[b].desc,
                                     status: result.matchInfo[0].player[a].status
                                 })
@@ -139,12 +141,12 @@ function Player({playerCheck, result, getPosition}:any){
 
                         }
                     }
-                    if(playerCheck.default[i].id === result.matchInfo[1].player[a].spId){
+                    if(playerCheck[i].id === result.matchInfo[1].player[a].spId){
                         for(let b = 0; b < getPosition.length; b++){
                             if(result.matchInfo[1].player[a].spPosition === getPosition[b].spposition){
                                 away.push({
                                     num: getPosition[b].spposition,
-                                    name: playerCheck.default[i].name,
+                                    name: playerCheck[i].name,
                                     position: getPosition[b].desc,
                                     status: result.matchInfo[0].player[a].status
                                 })
@@ -154,10 +156,10 @@ function Player({playerCheck, result, getPosition}:any){
                     }
                  }
             }
-            home.sort(function(a:any,b:any){
+            home.sort(function(a:IplayerStatus,b:IplayerStatus){
                 return a.num - b.num 
             })
-            away.sort(function(a:any,b:any){
+            away.sort(function(a:IplayerStatus,b:IplayerStatus){
                 return a.num - b.num
             })
 

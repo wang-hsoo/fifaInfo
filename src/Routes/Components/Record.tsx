@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import ApexChart from "react-apexcharts";
+import { ImatchBasic } from "../../api";
 
 function Record({result}:any){
     const [home, setHome] = useState([]);
     const [away, setAway]= useState([]);
     
+
     useEffect(()=>{
         const a = [
             result.matchInfo[0].matchDetail.possession,
