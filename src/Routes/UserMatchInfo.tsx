@@ -12,12 +12,13 @@ import Record from "./Components/Record";
 const Wrapper = styled.div`
     width: 100%;
     margin-top: 30px;
+    
 `
 
 const Title = styled.h1`
     font-size: 40px;
     font-weight: 500;
-    color: ${(props) => props.theme.bgColor};
+    color: white;
     border-bottom: 2px solid white; 
     padding-bottom: 8px;
 `
@@ -30,7 +31,7 @@ const Menu = styled.div`
 const Btn = styled.div`
     cursor: pointer;
     margin-right: 10px;
-    color: ${(props) => props.theme.bgColor};
+    color:white;
     background-color: ${(props) => props.theme.dark};
     text-align: center;
     padding: 10px 30px;
@@ -47,7 +48,7 @@ const MatchList = styled.div`
     width: 100%;
 `
 const MatchTItle = styled.h2`
-    color: ${(props) => props.theme.bgColor};
+    color: white;
     font-size: 30px;
     font-weight: 500;
 `
@@ -63,7 +64,8 @@ const MatchCover = styled.div`
 `
 
 const MatchContent = styled(motion.div)`
-    background-color: rgba(255,255,255,0.9);
+    background-color: ${(props) => props.theme.bgColor};
+    color: ${(props) => props.theme.black};
     display: flex;
     padding:  30px 30px;
     font-weight: 500;
@@ -110,7 +112,8 @@ const MatchResult = styled.div<{resultColor:string}>`
 const MatchDetail = styled(motion.div)`
     width: 100%;
     height: 850px;
-    background-color: ${(props) => props.theme.bgColor};
+    background-color: ${(props) => props.theme.back};
+    color: ${(props) => props.theme.black};
     position: relative;
     border-radius: 15px;
     margin-top: -120px;
@@ -138,7 +141,7 @@ const DetailBtnList =styled.div`
 `
 
 const DetailBtn = styled.div`
-    color: ${(props) => props.theme.bgColor};
+    color: white;
     cursor: pointer;
 `
 
@@ -210,7 +213,9 @@ function UserMatchInfo({accessId, nickname}:IsearchUser){
                 <MatchTItle>{matchTitle}</MatchTItle>
                     <Matchform>
                         {matchResult?.map((result:ImatchBasic) => (
+                            
                             <MatchCover>
+                                
                                 <MatchContent key={result.matchId} onClick={() => {setMatchDetail(result.matchId); setChangeMatchDetail("LineUp");}} layoutId={result.matchId}>
                                     <Vs>vs</Vs>
                                     <Opponent>

@@ -208,7 +208,7 @@ export interface ImatchBasic{
 }
 
 export interface ImatchInfo{
-  info: ImatchBasic[]
+  result: ImatchBasic
 }
 
 export async function matchInfo(matchList:any){

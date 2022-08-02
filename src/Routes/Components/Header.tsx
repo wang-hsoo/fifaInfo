@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { theme } from "../../theme";
+import { isDarkAtom, theme } from "../../theme";
 
 const Wrapper = styled.div`
     width: 100%;
@@ -57,9 +58,11 @@ const themeModVariant = {
 
 function Header(){
     const [themeMod, setThemeMod] = useState(false);
+    const setDarkAtom = useSetRecoilState(isDarkAtom);
 
     const changeMod = () => {
        setThemeMod((prev) => !prev);
+       setDarkAtom((prev) => !prev);
     }
 
     return(

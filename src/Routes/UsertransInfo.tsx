@@ -9,7 +9,7 @@ const Wrapper = styled.div`
 const Title = styled.h1`
     font-size: 40px;
     font-weight: 500;
-    color: ${(props) => props.theme.bgColor};
+    color: white;
     border-bottom: 2px solid white; 
     padding-bottom: 8px;
 `
@@ -22,7 +22,7 @@ const Menu = styled.div`
 const Btn = styled.div`
     cursor: pointer;
     margin-right: 10px;
-    color: ${(props) => props.theme.bgColor};
+    color: white;
     background-color: ${(props) => props.theme.dark};
     text-align: center;
     padding: 10px 30px;
@@ -44,9 +44,11 @@ const TransList = styled.div`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     margin-top: 10px;
-    background-color: rgba(255,255,255,0.9);
+    background-color: ${(props) => props.theme.bgColor};
     border-radius: 20px;
     place-items: center;
+    color: ${(props) => props.theme.black};
+    
 `
 
 const PlayerInfo = styled.div`

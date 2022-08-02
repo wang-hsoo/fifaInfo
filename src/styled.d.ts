@@ -9,5 +9,7 @@ declare module "styled-components" {
     mainBack:string;
     userName:string;
     dark: string;
+    light:string;
+    back:string;
   }
 }

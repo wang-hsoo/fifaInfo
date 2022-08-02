@@ -13,7 +13,7 @@ const Wrapper =styled.div`
     margin-top: 30px;
 `
 const Title = styled.h1`
-    color: ${(props) => props.theme.bgColor};
+    color: white;
     font-size: 45px;
     font-weight: 900;
     padding-bottom: 8px;
@@ -30,23 +30,25 @@ const MaxContent = styled.div`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     width: 700px;
-    background-color: aliceblue;
+    background-color: ${(props) => props.theme.bgColor};
     place-items: center;
     padding: 10px 0;
     font-weight: 400;
+    color: ${(props) => props.theme.black};
 `
 const Row = styled.div`
     display: flex;
     width: 700px;
     align-items: center;
     justify-content: space-around;
-    background-color: ${(props) => props.theme.bgColor};
+    background-color: ${(props) => props.theme.light};
     padding: 8px 0;
 `
 
 const RowList = styled.div`
     font-size: 18px;
     font-weight: 600;
+    color: ${(props) => props.theme.black};
 `
 
 const Submenu = styled.div`
@@ -66,7 +68,7 @@ const SubList = styled.div`
 const Btn = styled(motion.button)`
     border: none;
     background-color:transparent;
-    color: ${(props) => props.theme.bgColor};
+    color: white;
     cursor: pointer;
     font-size: 17px;
     font-weight: 400;

@@ -23,13 +23,13 @@ const Input = styled.input`
     border: none;
     background: transparent;
     border-bottom:  2px solid #ffffff;
-    color: ${(props) => props.theme.bgColor};
+    color: white;
     font-weight: bold;
     padding-bottom: 5px;
     margin-top: 20px;
     font-size: 24px;
     &::placeholder{
-        color: ${(props) => props.theme.bgColor};
+        color: white;
         opacity: 0.7;
     }
     &:focus::placeholder{
@@ -47,7 +47,7 @@ const Name = styled.div`
     color: ${(props) => props.theme.black};
     cursor: pointer;
     padding: 10px 10px;
-    background-color: ${(props) => props.theme.bgColor};
+    background-color: ${(props) => props.theme.bgColor};;
     border-radius: 20px;
     font-weight: 500;
     font-size: 15px;

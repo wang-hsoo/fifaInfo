@@ -46,7 +46,7 @@ const Gk = styled.div`
     place-items: center;
     &:first-child{
         background-color: ${(props) => props.theme.userName};
-        color: ${(props) => props.theme.bgColor};
+        color: white;
     }
     
     
@@ -64,7 +64,7 @@ const Field = styled.div`
     padding: 10px 0;
     &:first-child{
         background-color: ${(props) => props.theme.userName} !important;
-        color: ${(props) => props.theme.bgColor};
+        color: white;
     }
 `
 
